@@ -34,7 +34,7 @@ const eraserBtn = document.getElementById('eraserBtn');
 if (eraserBtn) {
     eraserBtn.addEventListener('click', () => {
         isErasing = !isErasing;
-        eraserBtn.textContent = isErasing ? 'Desenhar' : 'Borracha';
+        eraserBtn.textContent = isErasing ? 'Draw' : 'Eraser';
     });
 }
 
