@@ -1,4 +1,4 @@
-# Web Drawing App
+# Animatchones
 
 This project is a simple web-based drawing application that allows users to draw on a canvas using different brush sizes and colors. 
 
