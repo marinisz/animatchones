@@ -10,7 +10,6 @@ let currentSize = brushSize.value;
 let isErasing = false;
 
 
-// Define o fundo do canvas como branco puro
 ctx.fillStyle = '#fff';
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -31,7 +30,6 @@ canvas.addEventListener('mousemove', (e) => {
         ctx.moveTo(e.offsetX, e.offsetY);
     }
 });
-// Botão de borracha
 const eraserBtn = document.getElementById('eraserBtn');
 if (eraserBtn) {
     eraserBtn.addEventListener('click', () => {
@@ -65,7 +63,6 @@ clearBtn.addEventListener('click', () => {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 });
 
-// Adiciona funcionalidade de salvar frame
 const framesColumn = document.getElementById('framesColumn');
 const saveFrameBtn = document.getElementById('saveFrame');
 
@@ -81,17 +78,14 @@ if (framesColumn && saveFrameBtn) {
     });
 }
 
-// Função para mostrar animação dos frames em um pop-up
 const playAnimationBtn = document.getElementById('playAnimation');
 if (playAnimationBtn) {
     playAnimationBtn.addEventListener('click', () => {
-        // Coleta todos os frames
         const frameImages = Array.from(framesColumn.querySelectorAll('img'));
         if (frameImages.length === 0) {
             alert('Nenhum frame salvo!');
             return;
         }
-        // Cria pop-up
         const popup = document.createElement('div');
         popup.style.position = 'fixed';
         popup.style.top = '50%';
@@ -102,29 +96,57 @@ if (playAnimationBtn) {
         popup.style.padding = '20px';
         popup.style.zIndex = '9999';
         popup.style.boxShadow = '0 0 20px rgba(0,0,0,0.3)';
-        // Área da animação
         const animImg = document.createElement('img');
         animImg.style.width = '400px';
         animImg.style.height = '300px';
         animImg.style.display = 'block';
         animImg.style.margin = '0 auto 20px auto';
         popup.appendChild(animImg);
-        // Botão fechar
+        const downloadBtn = document.createElement('button');
+        downloadBtn.textContent = 'Download Animation';
+        downloadBtn.style.display = 'block';
+        downloadBtn.style.margin = '0 auto 10px auto';
+        popup.appendChild(downloadBtn);
         const closeBtn = document.createElement('button');
-        closeBtn.textContent = 'Fechar';
+        closeBtn.textContent = 'Close';
         closeBtn.style.display = 'block';
         closeBtn.style.margin = '0 auto';
         closeBtn.onclick = () => document.body.removeChild(popup);
         popup.appendChild(closeBtn);
         document.body.appendChild(popup);
-        // Animação dos frames
         let idx = 0;
         animImg.src = frameImages[0].src;
         let interval = setInterval(() => {
             idx = (idx + 1) % frameImages.length;
             animImg.src = frameImages[idx].src;
-        }, 200); // 300ms por frame
-        // Limpa intervalo ao fechar
+        }, 200);
         closeBtn.addEventListener('click', () => clearInterval(interval));
+        downloadBtn.addEventListener('click', async () => {
+            console.log("Download Animation button clicked");
+            const gif = new window.GIF({ workers: 2, quality: 10, width: 400, height: 300, workerScript: "https://cdn.jsdelivr.net/npm/gif.js.optimized/dist/gif.worker.js" });
+            for (const frame of frameImages) {
+                const tempImg = document.createElement('img');
+                tempImg.src = frame.src;
+                await new Promise(r => { tempImg.onload = r; });
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = 400;
+                tempCanvas.height = 300;
+                const tempCtx = tempCanvas.getContext('2d');
+                tempCtx.drawImage(tempImg, 0, 0, 400, 300);
+                gif.addFrame(tempCtx, {copy: true, delay: 200});
+            }
+            gif.on('finished', function(blob) {
+                console.log("GIF finished, starting download");
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'animation.gif';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+            gif.render();
+        });
     });
 }

@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Drawing App</title>
+    <script src="https://cdn.jsdelivr.net/npm/gif.js.optimized/dist/gif.js"></script>
+    <script>
+        if (window.GIF) {
+            window.GIF.workerScript = "https://cdn.jsdelivr.net/npm/gif.js.optimized/dist/gif.worker.js";
+        }
+        window.gifjsWorkerPath = "https://cdn.jsdelivr.net/npm/gif.js.optimized/dist/gif.worker.js";
+    </script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
