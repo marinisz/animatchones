@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Drawing App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div style="display: flex; flex-direction: row;">
+        <div id="framesColumn" style="width:120px; min-height:600px; border-right:1px solid #ccc; padding:10px;">
+            <h3>Frames</h3>
+        </div>
+        <div style="margin-left:20px;">
+            <h1>Web Drawing App</h1>
+            <canvas id="drawingCanvas" width="800" height="600"></canvas>
+            <div>
+                <label for="colorPicker">Color:</label>
+                <input type="color" id="colorPicker" value="#000000">
+                <label for="brushSize">Brush Size:</label>
+                <input type="range" id="brushSize" min="1" max="50" value="5">
+                <button id="clearCanvas">Clear Canvas</button>
+                <button id="saveFrame">Save Frame</button>
+                <button id="playAnimation">Play Animation</button>
+                <button id="eraserBtn">Eraser</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
