@@ -12,11 +12,9 @@ This project is a simple web-based drawing application that allows users to draw
 ## File Structure
 
 ```
-web-drawing-app
-├── src
-│   ├── index.html      # HTML structure of the web page
-│   ├── styles.css      # CSS styles for the web page
-│   ├── app.js          # JavaScript code for drawing functionality
+├── index.html      # HTML structure of the web page
+├── styles.css      # CSS styles for the web page
+├── app.js          # JavaScript code for drawing functionality
 ├── README.md           # Documentation for the project
 ```
 
